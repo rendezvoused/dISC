@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Discord Profile Widget - Armido</title>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #07080a;
+      --card-bg: #111216;
+      --card-subtle: #191b22;
+      --card-hover: #222530;
+      --discord-blurple: #5865f2;
+      --discord-dnd: #f23f43;
+      --spotify-green: #1db954;
+      --text-main: #f3f4f6;
+      --text-muted: #8b929e;
+      --text-tertiary: #676d79;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --font-gothic: 'Cinzel', serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-marker: 'Permanent Marker', cursive;
+      --font-serif: 'Playfair Display', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: clamp(12px, 3vw, 24px);
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(35, 38, 55, 0.4) 0%, rgba(7, 8, 10, 0.98) 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* PANTALLA 1: PÍLDORA FLOTANTE */
+    .pill-wrapper {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: clamp(340px, 92vw, 540px);
+      cursor: pointer;
+      animation: levitateWidget 4.2s ease-in-out infinite alternate;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+    }
+
+    .pill-wrapper:hover {
+      transform: translateY(-8px) scale(1.018);
+      filter: brightness(1.08);
+    }
+
+    .pill-wrapper:active {
+      transform: translateY(-2px) scale(0.985);
+    }
+
+    @keyframes levitateWidget {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
+      }
+      50% {
+        transform: translateY(-9px) rotate(-0.25deg);
+        filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.85));
+      }
+      100% {
+        transform: translateY(-14px) rotate(0.25deg);
+        filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.95));
+      }
+    }
+
+    .floating-pill {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: clamp(70px, 12vw, 82px);
+      padding: 6px clamp(12px, 3vw, 16px) 6px clamp(8px, 2vw, 12px);
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #171920 0%, #1d2029 45%, #272a37 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12),
+                  0 8px 30px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .pill-crow-overlay {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 58%;
+      height: 100%;
+      background-image: url('https://xatimg.com/image/sUvHtCZOGnxk.gif');
+      background-size: cover;
+      background-position: center right;
+      mix-blend-mode: screen;
+      opacity: 0.34;
+      pointer-events: none;
+      mask-image: linear-gradient(to right, transparent 0%, black 50%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
+    }
+
+    .pill-avatar-box {
+      position: relative;
+      width: clamp(52px, 10vw, 62px);
+      height: clamp(52px, 10vw, 62px);
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .pill-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      display: block;
+    }
+
+    .dnd-badge {
+      position: absolute;
+      bottom: -1px;
+      right: -2px;
+      width: clamp(18px, 3.5vw, 22px);
+      height: clamp(18px, 3.5vw, 22px);
+      background-color: var(--discord-dnd);
+      border-radius: 50%;
+      border: 3px solid #14161c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .dnd-bar {
+      width: clamp(8px, 1.8vw, 10px);
+      height: 2.5px;
+      background-color: #ffffff;
+      border-radius: 2px;
+    }
+
+    .pill-content {
+      flex: 1;
+      margin-left: clamp(10px, 2.5vw, 14px);
+      margin-right: clamp(8px, 2vw, 12px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .pill-username {
+      font-family: var(--font-gothic);
+      font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+      font-weight: 700;
+      color: #eaecef;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+      line-height: 1.2;
+    }
+
+    .pill-username svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.85;
+      stroke-width: 2.5;
+    }
+
+    .pill-marquee-window {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 3px;
+      position: relative;
+      mask-image: linear-gradient(90deg, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, black 80%, transparent 100%);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      align-items: center;
+      animation: continuousScroll 13s linear infinite;
+    }
+
+    .pill-wrapper:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .pill-marquee-text {
+      font-size: clamp(0.82rem, 1.9vw, 0.9rem);
+      color: #8f96a4;
+      font-weight: 500;
+      padding-right: 28px;
+    }
+
+    @keyframes continuousScroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .pill-bell-button {
+      width: clamp(40px, 7.5vw, 46px);
+      height: clamp(40px, 7.5vw, 46px);
+      border-radius: clamp(10px, 2vw, 14px);
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f1f3f5;
+      flex-shrink: 0;
+      z-index: 3;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .pill-bell-button:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: scale(1.06);
+    }
+
+    /* PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO */
+    .profile-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .profile-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .profile-sheet {
+      width: 100%;
+      max-width: 450px;
+      background: var(--card-bg);
+      border-radius: 28px 28px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: none;
+      height: 94vh;
+      height: 94dvh;
+      max-height: 880px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+    }
+
+    .profile-overlay.active .profile-sheet {
+      transform: translateY(0);
+    }
+
+    @media (min-width: 600px) {
+      .profile-overlay {
+        align-items: center;
+        padding: 24px;
+      }
+      .profile-sheet {
+        border-radius: 28px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        height: 88vh;
+        height: 88dvh;
+      }
+    }
+
+    /* ==========================================================
+       CABECERA FIJA (PORTADA IMAGEN + AVATAR + ESTADO FLOTANTE)
+       ========================================================== */
+    .profile-fixed-header {
+      flex-shrink: 0;
+      background: var(--card-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 15;
+      position: relative;
+    }
+
+    /* Portada Banner como Imagen */
+    .profile-banner {
+      width: 100%;
+      height: clamp(110px, 22vw, 135px);
+      position: relative;
+      overflow: hidden;
+      background-color: #1a1c24;
+    }
+
+    .profile-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+    }
+
+    .profile-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(17, 18, 22, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    /* Botón cerrar flotante sobre el banner */
+    .close-btn {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 10;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.06);
+    }
+
+    /* Fila de Avatar y Estado montados sobre el banner */
+    .avatar-quote-flex {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      padding: 0 clamp(16px, 3.5vw, 22px) 14px;
+      margin-top: -38px; /* Hace que el avatar se monte en la portada */
+      position: relative;
+      z-index: 5;
+    }
+
+    .sheet-avatar-box {
+      position: relative;
+      width: clamp(72px, 14vw, 84px);
+      height: clamp(72px, 14vw, 84px);
+      flex-shrink: 0;
+    }
+
+    .sheet-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--card-bg);
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sheet-status-bubble {
+      background: var(--card-subtle);
+      border-radius: 16px 16px 16px 4px;
+      padding: 10px 14px;
+      font-size: clamp(0.84rem, 2vw, 0.9rem);
+      line-height: 1.35;
+      color: #cfd3dc;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      max-width: 250px;
+      margin-bottom: 2px;
+    }
+
+    /* ==========================================================
+       ÁREA CON SCROLL (COMIENZA A PARTIR DEL NOMBRE)
+       ========================================================== */
+    .sheet-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px clamp(16px, 3.5vw, 22px) 24px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    }
+
+    .sheet-scroll-body::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sheet-scroll-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+
+    .sheet-name-block {
+      margin-bottom: 14px;
+    }
+
+    .sheet-main-name {
+      font-family: var(--font-gothic);
+      font-size: clamp(1.35rem, 3.2vw, 1.55rem);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+    }
+
+    .sheet-handle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .sheet-handle {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .sheet-badges {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--card-subtle);
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .badge-item {
+      font-size: 0.85rem;
+    }
+
+    .sheet-nav-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+
+    .nav-tab-item {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 4px 10px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-tab-item.active {
+      color: #fff;
+    }
+
+    .nav-tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    /* SPOTIFY */
+    .spotify-box {
+      background: linear-gradient(145deg, #17181f 0%, #121319 100%);
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .spotify-top-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9aa0ad;
+      margin-bottom: 10px;
+    }
+
+    .spotify-top-label svg {
+      color: var(--spotify-green);
+    }
+
+    .spotify-media-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .spotify-album-cover {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .spotify-song-meta {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .spotify-song-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .spotify-artist {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .spotify-toggle-btn {
+      background: var(--spotify-green);
+      color: #000;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .spotify-toggle-btn:hover {
+      transform: scale(1.08);
+      background: #1ed760;
+    }
+
+    .spotify-progress-container {
+      margin-top: 6px;
+    }
+
+    .spotify-progress-bg {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .spotify-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--discord-blurple);
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+
+    .spotify-timestamps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      color: #7d828f;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .field-caption {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #898f9c;
+      margin-bottom: 8px;
+    }
+
+    .biography-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: #d2d5de;
+      font-size: 1.05rem;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    /* SECCIÓN AMIGOS */
+    .friends-card-box {
+      background: var(--card-subtle);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .friends-card-box:hover {
+      background: var(--card-hover);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .friends-interactive-stack {
+      display: flex;
+      align-items: center;
+    }
+
+    .friend-avatar-link {
+      position: relative;
+      display: block;
+      margin-left: -8px;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.1s;
+      text-decoration: none;
+    }
+
+    .friend-avatar-link:first-child {
+      margin-left: 0;
+    }
+
+    .friend-avatar-link:hover {
+      transform: translateY(-4px) scale(1.18);
+      z-index: 10;
+    }
+
+    .friend-img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--card-subtle);
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .friend-avatar-link::after {
+      content: attr(data-friend-name);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #000;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .friend-avatar-link:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .friends-action-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.2s, transform 0.15s;
+    }
+
+    .friends-action-link:hover {
+      color: #fff;
+      transform: translateX(2px);
+    }
+
+    .toast-popup {
+      position: fixed;
+      top: 24px;
+      background: rgba(25, 27, 34, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      transform: translateY(-100px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .toast-popup.visible {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================
+       PANTALLA 1: PÍLDORA FLOTANTE
+       ========================================================== -->
+  <div class="pill-wrapper" id="openProfileTrigger" title="Haz clic para ver el perfil de Arm">
+    <div class="floating-pill">
+      <div class="pill-crow-overlay"></div>
+
+      <div class="pill-avatar-box">
+        <img src="https://xatimg.com/image/IP8Aa5XkW0EN.jpg" alt="Avatar" class="pill-avatar-img">
+        <div class="dnd-badge" title="No molestar">
+          <div class="dnd-bar"></div>
+        </div>
+      </div>
+
+      <div class="pill-content">
+        <div class="pill-username">
+          <span class="user-display-name">Scar</span>
+          <i data-lucide="chevron-down"></i>
+        </div>
+        <div class="pill-marquee-window">
+          <div class="marquee-track">
+            <span class="pill-marquee-text user-status-text">Llevo mil cicatrices que no me corresponden</span>
+            <span class="pill-marquee-text user-status-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <button class="pill-bell-button" id="bellButton" title="Notificaciones">
+        <i data-lucide="bell" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================
+       PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO
+       ========================================================== -->
+  <div class="profile-overlay" id="profileModalOverlay">
+    <div class="profile-sheet">
+
+      <!-- ==========================================================
+           ZONA FIJA: PORTADA IMAGEN + AVATAR + ESTADO FLOTANTE
+           ========================================================== -->
+      <div class="profile-fixed-header">
+        
+        <!-- Portada como Imagen (Reemplaza el src con la que prefieras) -->
+        <div class="profile-banner">
+          <img src="https://xatimg.com/image/sUvHtCZOGnxk.gif" alt="Portada de perfil" class="profile-banner-img">
+          <div class="profile-banner-overlay"></div>
+          
+          <!-- Botón cerrar flotante sobre la portada -->
+          <button class="close-btn" id="closeProfileTrigger" title="Cerrar perfil (Esc)">
+            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+          </button>
+        </div>
+
+        <!-- Fila de Avatar superpuesto sobre la portada + Estado flotante -->
+        <div class="avatar-quote-flex">
+          <div class="sheet-avatar-box">
+            <img src="https://xatimg.com/image/IP8Aa5XkW0EN.jpg" alt="Avatar" class="sheet-avatar-img">
+            <div class="dnd-badge" style="width: 24px; height: 24px; bottom: 0; right: 0;">
+              <div class="dnd-bar" style="width: 11px;"></div>
+            </div>
+          </div>
+
+          <div class="sheet-status-bubble user-status-text">
+            Llevo mil cicatrices que no me corresponden
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================
+           ZONA SCROLLEABLE: A partir del Nombre
+           ========================================================== -->
+      <div class="sheet-scroll-body">
+
+        <!-- Nombre e insignias -->
+        <div class="sheet-name-block">
+          <div class="sheet-main-name">
+            <span class="user-display-name">𝑺𝒄𝒂𝒓</span>
+            <i data-lucide="chevron-down" style="width: 16px; height: 16px;"></i>
+          </div>
+          <div class="sheet-handle-row">
+            <span class="sheet-handle">rendezvoused - Nyxess</span>
+            <div class="sheet-badges">
+              <span class="badge-item" title="Nitro Booster">💬</span>
+              <span class="badge-item" title="Server Booster">ৎ୭</span>
+              <span class="badge-item" title="HypeSquad Bravery">🚫</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs de navegación -->
+        <div class="sheet-nav-tabs">
+          <button class="nav-tab-item active">Principal</button>
+          <button class="nav-tab-item"></button>
+          <button class="nav-tab-item"></button>
+        </div>
+
+        <!-- Widget Spotify con Reproducción Directa DropBox -->
+        <div class="spotify-box">
+          <div class="spotify-top-label">
+            <i data-lucide="radio" style="width: 15px; height: 15px;"></i>
+            <span>Escuchando Spotify</span>
+          </div>
+
+          <div class="spotify-media-row">
+            <img src="https://xatimg.com/image/KEH5KGSjFf7z.jpg" alt="Cover" class="spotify-album-cover">
+            
+            <div class="spotify-song-meta">
+              <div class="spotify-song-title">Irme Lejos</div>
+              <div class="spotify-artist">Airbag</div>
+            </div>
+
+            <button class="spotify-toggle-btn" id="musicPlayToggle" title="Play / Pausa">
+              <i data-lucide="play" id="musicPlayIcon" style="width: 17px; height: 17px; fill: black;"></i>
+            </button>
+          </div>
+
+          <!-- Barra de progreso interactiva -->
+          <div class="spotify-progress-container">
+            <div class="spotify-progress-bg" id="trackTimeline">
+              <div class="spotify-progress-bar" id="trackProgressFill"></div>
+            </div>
+            <div class="spotify-timestamps">
+              <span id="audioCurrent">00:00</span>
+              <span id="audioTotal">--:--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Biografía -->
+        <div class="field-caption">Biografía</div>
+        <div class="biography-quote" id="bioContent">
+          We are all going to hell, but not today
+        </div>
+
+        <!-- Sección Amigos -->
+        <div class="field-caption">Amigos</div>
+        <div class="friends-card-box">
+          <span style="font-weight: 600; font-size: 0.92rem;">Amigos</span>
+          
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="friends-interactive-stack">
+              <!-- Amigo 1 -->
+              <a href="https://xat.me/SCHROEDERZ" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Mythos" title="Ver perfil de Mythos">
+                <img src="https://xatimg.com/image/1hgbq3AYHsHr.jpg" alt="Mythos" class="friend-img">
+              </a>
+
+              <!-- Amigo 2 -->
+              <a href="https://xat.me/zSovereign" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Ren" title="Ver perfil de Ren">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVx_MUjUFRzDP3VugKk8YCI2gJ4aWtLnkgiv7IrG6cdw&s" alt="Zenith" class="friend-img">
+              </a>
+
+              <!-- Amigo 3 -->
+              <a href="https://xat.me/Frieren" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Sinbad" title="Ver perfil de Sinbad">
+                <img src="https://xatimg.com/image/vSk9JKD8oWxb.jpg" alt="Val" class="friend-img">
+              </a>
+            </div>
+
+            <!-- Botón lista completa -->
+            <a href="https://discord.com/channels/@me" target="_blank" rel="noopener noreferrer" class="friends-action-link" title="Ver lista completa de amigos">
+              <i data-lucide="chevron-right" style="width: 17px; height: 17px;"></i>
+            </a>
+          </div>
+        </div>
+
+      </div> <!-- Fin .sheet-scroll-body -->
+
+    </div>
+  </div>
+
+  <!-- Audio elemento DropBox -->
+  <audio id="audioPlayer" preload="auto"></audio>
+
+  <!-- Toast flotante -->
+  <div class="toast-popup" id="toastBox">Notificación</div>
+
+  <script>
+    lucide.createIcons();
+
+    // ==========================================
+    // ENLACE DIRECTO DE DROPBOX
+    // ==========================================
+    const DROPBOX_AUDIO_URL = "https://www.dropbox.com/scl/fi/prxjt2m0n765mkv9ks873/Irme-Lejos.mp3?rlkey=a89pdle2i40hitp2rmpw5cj63&st=t6g8w1b2&dl=0";
+
+    function formatDropboxDirectUrl(url) {
+      if (!url) return "";
+      return url.replace("&dl=0", "&raw=1").replace("?dl=0", "?raw=1");
+    }
+
+    const audioPlayer = document.getElementById('audioPlayer');
+    audioPlayer.src = formatDropboxDirectUrl(DROPBOX_AUDIO_URL);
+
+    // Referencias del DOM
+    const openTrigger = document.getElementById('openProfileTrigger');
+    const closeTrigger = document.getElementById('closeProfileTrigger');
+    const modalOverlay = document.getElementById('profileModalOverlay');
+    const bellBtn = document.getElementById('bellButton');
+    const toast = document.getElementById('toastBox');
+
+    // Controles de Audio Spotify
+    const playToggle = document.getElementById('musicPlayToggle');
+    const playIcon = document.getElementById('musicPlayIcon');
+    const progressFill = document.getElementById('trackProgressFill');
+    const timeline = document.getElementById('trackTimeline');
+    const timeDisplay = document.getElementById('audioCurrent');
+    const totalDisplay = document.getElementById('audioTotal');
+
+    let toastTimeout;
+    function showToast(msg) {
+      clearTimeout(toastTimeout);
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2500);
+    }
+
+    // Reproducción
+    function playAudioTrack() {
+      const playPromise = audioPlayer.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          showToast('Reproduciendo: Airbag - Irme Lejos');
+        }).catch(err => {
+          console.warn('Autoplay prevenido:', err);
+        });
+      }
+    }
+
+    // Pausa
+    function pauseAudioTrack() {
+      if (!audioPlayer.paused) {
+        audioPlayer.pause();
+      }
+    }
+
+    // Auto-reproducción al entrar a la pantalla 2
+    openTrigger.addEventListener('click', () => {
+      modalOverlay.classList.add('active');
+      playAudioTrack();
+    });
+
+    // Pausar si se cierra la pantalla 2
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      pauseAudioTrack();
+    }
+
+    closeTrigger.addEventListener('click', closeModal);
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    bellBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast('No tienes notificaciones pendientes');
+    });
+
+    // Formatear segundos a mm:ss
+    function formatTime(sec) {
+      if (isNaN(sec) || !isFinite(sec)) return "00:00";
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(Math.floor(sec % 60)).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    // Play / Pausa manual en el botón de Spotify
+    playToggle.addEventListener('click', () => {
+      if (audioPlayer.paused) {
+        playAudioTrack();
+      } else {
+        pauseAudioTrack();
+        showToast('Spotify en pausa');
+      }
+    });
+
+    audioPlayer.addEventListener('play', () => {
+      playIcon.setAttribute('data-lucide', 'pause');
+      lucide.createIcons();
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      playIcon.setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    });
+
+    audioPlayer.addEventListener('loadedmetadata', () => {
+      totalDisplay.textContent = formatTime(audioPlayer.duration);
+    });
+
+    audioPlayer.addEventListener('timeupdate', () => {
+      if (!audioPlayer.duration) return;
+      const current = audioPlayer.currentTime;
+      const total = audioPlayer.duration;
+      timeDisplay.textContent = formatTime(current);
+      const pct = (current / total) * 100;
+      progressFill.style.width = pct + '%';
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+      progressFill.style.width = '0%';
+      timeDisplay.textContent = "00:00";
+      playIcon.setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    });
+
+    // Clic en la barra para cambiar momento de la pista
+    timeline.addEventListener('click', (e) => {
+      if (!audioPlayer.duration) return;
+      const rect = timeline.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      audioPlayer.currentTime = ratio * audioPlayer.duration;
+    });
+
+    // Tabs
+    document.querySelectorAll('.nav-tab-item').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.nav-tab-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
