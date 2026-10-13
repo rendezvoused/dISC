@@ -35,7 +35,7 @@
       --card-bg: #111216;
       --card-subtle: #191b22;
       --card-hover: #222530;
-      --discord-blurple: #5865f2;
+      --discord-blurple: #838fff;
       --discord-dnd: #f23f43;
       --spotify-green: #1db954;
       --gaming-green: #82b058;
@@ -80,6 +80,7 @@
       z-index: 0;
     }
 
+    /* PANTALLA 1: PÍLDORA FLOTANTE */
     .pill-wrapper {
       position: relative;
       z-index: 10;
@@ -309,6 +310,7 @@
       box-shadow: 0 0 6px rgba(242, 63, 67, 0.8);
     }
 
+    /* PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO */
     .profile-overlay {
       position: fixed;
       inset: 0;
@@ -554,119 +556,7 @@
       border-radius: 2px;
     }
 
-    .spotify-box {
-      background: linear-gradient(145deg, #17181f 0%, #121319 100%);
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      margin-bottom: 18px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-    }
-
-    .spotify-top-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 12px;
-    }
-
-    /* Logo PNG en blanco y negro puro */
-    .spotify-logo-png {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-      display: block;
-      filter: brightness(0) invert(1);
-    }
-
-    .spotify-media-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .spotify-album-cover {
-      width: 52px;
-      height: 52px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-    }
-
-    .spotify-song-meta {
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .spotify-song-title {
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .spotify-artist {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .spotify-toggle-btn {
-      background: var(--spotify-green);
-      color: #000;
-      border: none;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.15s, background 0.2s;
-    }
-
-    .spotify-toggle-btn:hover {
-      transform: scale(1.08);
-      background: #1ed760;
-    }
-
-    .spotify-progress-container {
-      margin-top: 6px;
-    }
-
-    .spotify-progress-bg {
-      width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .spotify-progress-bar {
-      width: 0%;
-      height: 100%;
-      background: var(--discord-blurple);
-      border-radius: 4px;
-      transition: width 0.1s linear;
-    }
-
-    .spotify-timestamps {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.74rem;
-      color: #7d828f;
-      margin-top: 5px;
-      font-weight: 600;
-    }
-
+    /* WIDGET JUGANDO */
     .gaming-box {
       background: var(--card-subtle);
       border-radius: 16px;
@@ -735,6 +625,139 @@
       font-weight: 600;
     }
 
+    /* WIDGET SPOTIFY (MISMO COLOR Y ESTILO QUE JUGANDO) */
+    .spotify-box {
+      background: var(--card-subtle);
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .spotify-top-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .spotify-logo-png {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .spotify-media-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .spotify-album-cover {
+      width: 58px;
+      height: 58px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .spotify-song-meta {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .spotify-song-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .spotify-artist {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .spotify-progress-container {
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    .spotify-progress-bg {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .spotify-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--discord-blurple);
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+
+    .spotify-timestamps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: #ffffff;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .spotify-action-btn {
+      width: 100%;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+
+    .spotify-action-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.01);
+    }
+
+    .spotify-action-btn:active {
+      transform: scale(0.99);
+    }
+
+    .spotify-action-btn img {
+      width: 16px;
+      height: 16px;
+      filter: brightness(0) invert(1);
+    }
+
     .field-caption {
       font-size: 0.78rem;
       font-weight: 700;
@@ -753,6 +776,7 @@
       margin-bottom: 16px;
     }
 
+    /* SECCIÓN AMIGOS */
     .friends-card-box {
       background: var(--card-subtle);
       border-radius: 14px;
@@ -852,6 +876,9 @@
 </head>
 <body>
 
+  <!-- ==========================================================
+       PANTALLA 1: PÍLDORA FLOTANTE
+       ========================================================== -->
   <div class="pill-wrapper" id="openProfileTrigger" title="Haz clic para ver el perfil de Arm">
     <div class="floating-pill">
       <div class="pill-crow-overlay"></div>
@@ -890,19 +917,30 @@
     </div>
   </div>
 
+
+  <!-- ==========================================================
+       PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO
+       ========================================================== -->
   <div class="profile-overlay" id="profileModalOverlay">
     <div class="profile-sheet">
 
+      <!-- ==========================================================
+           ZONA FIJA: PORTADA IMAGEN + AVATAR + ESTADO FLOTANTE
+           ========================================================== -->
       <div class="profile-fixed-header">
+        
+        <!-- Portada como Imagen -->
         <div class="profile-banner">
           <img src="https://xatimg.com/image/p1VNAksE8BDa.gif" alt="Portada de perfil" class="profile-banner-img">
           <div class="profile-banner-overlay"></div>
           
+          <!-- Botón cerrar flotante sobre la portada -->
           <button class="close-btn" id="closeProfileTrigger" title="Cerrar perfil (Esc)">
             <i data-lucide="x" style="width: 20px; height: 20px;"></i>
           </button>
         </div>
 
+        <!-- Fila de Avatar superpuesto sobre la portada + Estado flotante -->
         <div class="avatar-quote-flex">
           <div class="sheet-avatar-box">
             <img src="https://xatimg.com/image/1j6okd7hBo78.jpg" alt="Avatar" class="sheet-avatar-img">
@@ -917,8 +955,12 @@
         </div>
       </div>
 
+      <!-- ==========================================================
+           ZONA SCROLLEABLE: A partir del Nombre
+           ========================================================== -->
       <div class="sheet-scroll-body">
 
+        <!-- Nombre e insignias -->
         <div class="sheet-name-block">
           <div class="sheet-main-name">
             <span class="user-display-name">𝑺𝒄𝒂𝒓</span>
@@ -927,50 +969,23 @@
           <div class="sheet-handle-row">
             <span class="sheet-handle">rendezvoused • Nyxess</span>
             <div class="sheet-badges">
+              
               <span class="badge-item" title="Server Booster"><span class="icon-triangle">⌲</span></span>
               <span class="badge-item" title="Cigarrillo">🚬</span>
               <span class="badge-item" title="Curita">🩹</span>
-              <span class="badge-item" title="Nitro Booster">💬</span>
+               <span class="badge-item" title="Nitro Booster">💬</span>
             </div>
           </div>
         </div>
 
+        <!-- Tabs de navegación -->
         <div class="sheet-nav-tabs">
           <button class="nav-tab-item active">Principal</button>
           <button class="nav-tab-item"></button>
           <button class="nav-tab-item"></button>
         </div>
 
-        <div class="spotify-box">
-          <div class="spotify-top-label">
-            <span>Escuchando Spotify</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo Monochrome" class="spotify-logo-png">
-          </div>
-
-          <div class="spotify-media-row">
-            <img src="https://xatimg.com/image/KEH5KGSjFf7z.jpg" alt="Cover" class="spotify-album-cover">
-            
-            <div class="spotify-song-meta">
-              <div class="spotify-song-title">Irme Lejos</div>
-              <div class="spotify-artist">Airbag</div>
-            </div>
-
-            <button class="spotify-toggle-btn" id="musicPlayToggle" title="Play / Pausa">
-              <i data-lucide="play" id="musicPlayIcon" style="width: 17px; height: 17px; fill: black;"></i>
-            </button>
-          </div>
-
-          <div class="spotify-progress-container">
-            <div class="spotify-progress-bg" id="trackTimeline">
-              <div class="spotify-progress-bar" id="trackProgressFill"></div>
-            </div>
-            <div class="spotify-timestamps">
-              <span id="audioCurrent">00:00</span>
-              <span id="audioTotal">--:--</span>
-            </div>
-          </div>
-        </div>
-
+        <!-- Widget Jugando (PRIMERO) -->
         <div class="gaming-box">
           <div class="gaming-header">
             <span class="gaming-top-label">Jugando</span>
@@ -990,26 +1005,68 @@
           </div>
         </div>
 
+        <!-- Widget Spotify (MISMO FONDO Y ESTILO QUE JUGANDO) -->
+        <div class="spotify-box">
+          <div class="spotify-top-label">
+            <span>Escuchando Spotify</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="spotify-logo-png">
+          </div>
+
+          <div class="spotify-media-row">
+            <img src="https://xatimg.com/image/KEH5KGSjFf7z.jpg" alt="Cover" class="spotify-album-cover">
+            
+            <div class="spotify-song-meta">
+              <div class="spotify-song-title">Irme Lejos</div>
+              <div class="spotify-artist">Airbag</div>
+            </div>
+          </div>
+
+          <!-- Barra de progreso interactiva -->
+          <div class="spotify-progress-container">
+            <div class="spotify-progress-bg" id="trackTimeline">
+              <div class="spotify-progress-bar" id="trackProgressFill"></div>
+            </div>
+            <div class="spotify-timestamps">
+              <span id="audioCurrent">00:00</span>
+              <span id="audioTotal">--:--</span>
+            </div>
+          </div>
+
+          <!-- Botón "Reproducir en Spotify" -->
+          <button class="spotify-action-btn" id="musicPlayToggle">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
+            <span>Reproducir en Spotify</span>
+          </button>
+        </div>
+
+        <!-- Biografía -->
         <div class="field-caption">Biografía</div>
         <div class="biography-quote" id="bioContent">
           We are all going to hell, but not today
         </div>
 
+        <!-- Sección Amigos -->
         <div class="field-caption"></div>
         <div class="friends-card-box">
           <span style="font-weight: 600; font-size: 0.92rem;">Amigos</span>
           
           <div style="display: flex; align-items: center; gap: 10px;">
             <div class="friends-interactive-stack">
+              <!-- Amigo 1 -->
               <a href="https://xat.me/SCHROEDERZ" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Mythos" title="Ver perfil de Mythos">
                 <img src="https://xatimg.com/image/1hgbq3AYHsHr.jpg" alt="Mythos" class="friend-img">
               </a>
+
+              <!-- Amigo 2 -->
               <a href="https://xat.me/zSovereign" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Ren" title="Ver perfil de Ren">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVx_MUjUFRzDP3VugKk8YCI2gJ4aWtLnkgiv7IrG6cdw&s" alt="Zenith" class="friend-img">
               </a>
+
+              <!-- Amigo 3 -->
               <a href="https://xat.me/Frieren" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Sinbad" title="Ver perfil de Sinbad">
                 <img src="https://xatimg.com/image/vSk9JKD8oWxb.jpg" alt="Val" class="friend-img">
               </a>
+              <!-- Amigo 4 -->
               <a href="https://xat.me/Feid" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Doom" title="Ver perfil de Doom">
                 <img src="https://xatimg.com/image/rHbwUdubwmgr.jpg" alt="Val" class="friend-img">
               </a>
@@ -1019,17 +1076,23 @@
           </div>
         </div>
 
-      </div>
+      </div> <!-- Fin .sheet-scroll-body -->
 
     </div>
   </div>
 
+  <!-- Audio elemento DropBox -->
   <audio id="audioPlayer" preload="auto"></audio>
+
+  <!-- Toast flotante -->
   <div class="toast-popup" id="toastBox">Notificación</div>
 
   <script>
     lucide.createIcons();
 
+    // ==========================================
+    // ENLACE DIRECTO DE DROPBOX
+    // ==========================================
     const DROPBOX_AUDIO_URL = "https://www.dropbox.com/scl/fi/prxjt2m0n765mkv9ks873/Irme-Lejos.mp3?rlkey=a89pdle2i40hitp2rmpw5cj63&st=t6g8w1b2&dl=0";
 
     function formatDropboxDirectUrl(url) {
@@ -1040,6 +1103,7 @@
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = formatDropboxDirectUrl(DROPBOX_AUDIO_URL);
 
+    // Referencias del DOM
     const openTrigger = document.getElementById('openProfileTrigger');
     const closeTrigger = document.getElementById('closeProfileTrigger');
     const modalOverlay = document.getElementById('profileModalOverlay');
@@ -1047,8 +1111,8 @@
     const bellDot = document.getElementById('bellDot');
     const toast = document.getElementById('toastBox');
 
+    // Controles de Audio Spotify
     const playToggle = document.getElementById('musicPlayToggle');
-    const playIcon = document.getElementById('musicPlayIcon');
     const progressFill = document.getElementById('trackProgressFill');
     const timeline = document.getElementById('trackTimeline');
     const timeDisplay = document.getElementById('audioCurrent');
@@ -1064,6 +1128,7 @@
       }, 2500);
     }
 
+    // Reproducción
     function playAudioTrack() {
       const playPromise = audioPlayer.play();
       if (playPromise !== undefined) {
@@ -1075,17 +1140,20 @@
       }
     }
 
+    // Pausa
     function pauseAudioTrack() {
       if (!audioPlayer.paused) {
         audioPlayer.pause();
       }
     }
 
+    // Auto-reproducción al entrar a la pantalla 2
     openTrigger.addEventListener('click', () => {
       modalOverlay.classList.add('active');
       playAudioTrack();
     });
 
+    // Pausar si se cierra la pantalla 2
     function closeModal() {
       modalOverlay.classList.remove('active');
       pauseAudioTrack();
@@ -1105,6 +1173,7 @@
       }
     });
 
+    // Clic en la campana
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       showToast('Tienes un nuevo mensaje (249)');
@@ -1113,6 +1182,7 @@
       }
     });
 
+    // Formatear segundos a mm:ss
     function formatTime(sec) {
       if (isNaN(sec) || !isFinite(sec)) return "00:00";
       const m = String(Math.floor(sec / 60)).padStart(2, '0');
@@ -1120,6 +1190,7 @@
       return `${m}:${s}`;
     }
 
+    // Play / Pausa manual
     playToggle.addEventListener('click', () => {
       if (audioPlayer.paused) {
         playAudioTrack();
@@ -1127,16 +1198,6 @@
         pauseAudioTrack();
         showToast('Spotify en pausa');
       }
-    });
-
-    audioPlayer.addEventListener('play', () => {
-      playIcon.setAttribute('data-lucide', 'pause');
-      lucide.createIcons();
-    });
-
-    audioPlayer.addEventListener('pause', () => {
-      playIcon.setAttribute('data-lucide', 'play');
-      lucide.createIcons();
     });
 
     audioPlayer.addEventListener('loadedmetadata', () => {
@@ -1155,10 +1216,9 @@
     audioPlayer.addEventListener('ended', () => {
       progressFill.style.width = '0%';
       timeDisplay.textContent = "00:00";
-      playIcon.setAttribute('data-lucide', 'play');
-      lucide.createIcons();
     });
 
+    // Clic en la barra para cambiar momento de la pista
     timeline.addEventListener('click', (e) => {
       if (!audioPlayer.duration) return;
       const rect = timeline.getBoundingClientRect();
@@ -1167,6 +1227,7 @@
       audioPlayer.currentTime = ratio * audioPlayer.duration;
     });
 
+    // Contador de tiempo jugando (Inicia en 3:46:23)
     let gameSeconds = 3 * 3600 + 46 * 60 + 23;
     const timerElem = document.getElementById('gameplayTimer');
 
@@ -1184,6 +1245,7 @@
       }
     }, 1000);
 
+    // Tabs
     document.querySelectorAll('.nav-tab-item').forEach(tab => {
       tab.addEventListener('click', function() {
         document.querySelectorAll('.nav-tab-item').forEach(t => t.classList.remove('active'));
