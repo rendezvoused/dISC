@@ -80,7 +80,6 @@
       z-index: 0;
     }
 
-    /* PANTALLA 1: PÍLDORA FLOTANTE */
     .pill-wrapper {
       position: relative;
       z-index: 10;
@@ -218,7 +217,6 @@
       stroke-width: 2.5;
     }
 
-    /* Fila inferior de la píldora: Indicador fijo + Marquesina */
     .pill-status-row {
       display: flex;
       align-items: center;
@@ -299,7 +297,6 @@
       transform: scale(1.06);
     }
 
-    /* Punto de notificación sobre la campana */
     .bell-notification-dot {
       position: absolute;
       top: 6px;
@@ -312,7 +309,6 @@
       box-shadow: 0 0 6px rgba(242, 63, 67, 0.8);
     }
 
-    /* PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO */
     .profile-overlay {
       position: fixed;
       inset: 0;
@@ -366,9 +362,6 @@
       }
     }
 
-    /* ==========================================================
-       CABECERA FIJA (PORTADA IMAGEN + AVATAR + ESTADO FLOTANTE)
-       ========================================================== */
     .profile-fixed-header {
       flex-shrink: 0;
       background: var(--card-bg);
@@ -377,7 +370,6 @@
       position: relative;
     }
 
-    /* Portada Banner como Imagen */
     .profile-banner {
       width: 100%;
       height: clamp(110px, 22vw, 135px);
@@ -401,7 +393,6 @@
       pointer-events: none;
     }
 
-    /* Botón cerrar flotante sobre el banner */
     .close-btn {
       position: absolute;
       top: 14px;
@@ -426,7 +417,6 @@
       transform: scale(1.06);
     }
 
-    /* Fila de Avatar y Estado montados sobre el banner */
     .avatar-quote-flex {
       display: flex;
       align-items: flex-end;
@@ -467,9 +457,6 @@
       margin-bottom: 2px;
     }
 
-    /* ==========================================================
-       ÁREA CON SCROLL (COMIENZA A PARTIR DEL NOMBRE)
-       ========================================================== */
     .sheet-scroll-body {
       flex: 1;
       overflow-y: auto;
@@ -527,7 +514,6 @@
       font-size: 0.85rem;
     }
 
-    /* Triángulo inclinado 45° con la punta hacia arriba */
     .icon-triangle {
       display: inline-block;
       transform: rotate(-45deg);
@@ -568,7 +554,6 @@
       border-radius: 2px;
     }
 
-    /* SPOTIFY */
     .spotify-box {
       background: linear-gradient(145deg, #17181f 0%, #121319 100%);
       border-radius: 16px;
@@ -581,17 +566,20 @@
     .spotify-top-label {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #9aa0ad;
-      margin-bottom: 10px;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 12px;
     }
 
-    .spotify-top-label svg {
-      color: var(--spotify-green);
+    /* Logo PNG en blanco y negro puro */
+    .spotify-logo-png {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
     }
 
     .spotify-media-row {
@@ -679,7 +667,6 @@
       font-weight: 600;
     }
 
-    /* WIDGET JUGANDO */
     .gaming-box {
       background: var(--card-subtle);
       border-radius: 16px;
@@ -766,7 +753,6 @@
       margin-bottom: 16px;
     }
 
-    /* SECCIÓN AMIGOS */
     .friends-card-box {
       background: var(--card-subtle);
       border-radius: 14px;
@@ -866,9 +852,6 @@
 </head>
 <body>
 
-  <!-- ==========================================================
-       PANTALLA 1: PÍLDORA FLOTANTE
-       ========================================================== -->
   <div class="pill-wrapper" id="openProfileTrigger" title="Haz clic para ver el perfil de Arm">
     <div class="floating-pill">
       <div class="pill-crow-overlay"></div>
@@ -907,30 +890,19 @@
     </div>
   </div>
 
-
-  <!-- ==========================================================
-       PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO
-       ========================================================== -->
   <div class="profile-overlay" id="profileModalOverlay">
     <div class="profile-sheet">
 
-      <!-- ==========================================================
-           ZONA FIJA: PORTADA IMAGEN + AVATAR + ESTADO FLOTANTE
-           ========================================================== -->
       <div class="profile-fixed-header">
-        
-        <!-- Portada como Imagen -->
         <div class="profile-banner">
           <img src="https://xatimg.com/image/p1VNAksE8BDa.gif" alt="Portada de perfil" class="profile-banner-img">
           <div class="profile-banner-overlay"></div>
           
-          <!-- Botón cerrar flotante sobre la portada -->
           <button class="close-btn" id="closeProfileTrigger" title="Cerrar perfil (Esc)">
             <i data-lucide="x" style="width: 20px; height: 20px;"></i>
           </button>
         </div>
 
-        <!-- Fila de Avatar superpuesto sobre la portada + Estado flotante -->
         <div class="avatar-quote-flex">
           <div class="sheet-avatar-box">
             <img src="https://xatimg.com/image/1j6okd7hBo78.jpg" alt="Avatar" class="sheet-avatar-img">
@@ -945,12 +917,8 @@
         </div>
       </div>
 
-      <!-- ==========================================================
-           ZONA SCROLLEABLE: A partir del Nombre
-           ========================================================== -->
       <div class="sheet-scroll-body">
 
-        <!-- Nombre e insignias -->
         <div class="sheet-name-block">
           <div class="sheet-main-name">
             <span class="user-display-name">𝑺𝒄𝒂𝒓</span>
@@ -959,27 +927,24 @@
           <div class="sheet-handle-row">
             <span class="sheet-handle">rendezvoused • Nyxess</span>
             <div class="sheet-badges">
-              
               <span class="badge-item" title="Server Booster"><span class="icon-triangle">⌲</span></span>
               <span class="badge-item" title="Cigarrillo">🚬</span>
               <span class="badge-item" title="Curita">🩹</span>
-               <span class="badge-item" title="Nitro Booster">💬</span>
+              <span class="badge-item" title="Nitro Booster">💬</span>
             </div>
           </div>
         </div>
 
-        <!-- Tabs de navegación -->
         <div class="sheet-nav-tabs">
           <button class="nav-tab-item active">Principal</button>
           <button class="nav-tab-item"></button>
           <button class="nav-tab-item"></button>
         </div>
 
-        <!-- Widget Spotify con Reproducción Directa DropBox -->
         <div class="spotify-box">
           <div class="spotify-top-label">
-            <i data-lucide="radio" style="width: 15px; height: 15px;"></i>
             <span>Escuchando Spotify</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo Monochrome" class="spotify-logo-png">
           </div>
 
           <div class="spotify-media-row">
@@ -995,7 +960,6 @@
             </button>
           </div>
 
-          <!-- Barra de progreso interactiva -->
           <div class="spotify-progress-container">
             <div class="spotify-progress-bg" id="trackTimeline">
               <div class="spotify-progress-bar" id="trackProgressFill"></div>
@@ -1007,7 +971,6 @@
           </div>
         </div>
 
-        <!-- Widget Jugando -->
         <div class="gaming-box">
           <div class="gaming-header">
             <span class="gaming-top-label">Jugando</span>
@@ -1027,34 +990,26 @@
           </div>
         </div>
 
-        <!-- Biografía -->
         <div class="field-caption">Biografía</div>
         <div class="biography-quote" id="bioContent">
           We are all going to hell, but not today
         </div>
 
-        <!-- Sección Amigos -->
         <div class="field-caption"></div>
         <div class="friends-card-box">
           <span style="font-weight: 600; font-size: 0.92rem;">Amigos</span>
           
           <div style="display: flex; align-items: center; gap: 10px;">
             <div class="friends-interactive-stack">
-              <!-- Amigo 1 -->
               <a href="https://xat.me/SCHROEDERZ" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Mythos" title="Ver perfil de Mythos">
                 <img src="https://xatimg.com/image/1hgbq3AYHsHr.jpg" alt="Mythos" class="friend-img">
               </a>
-
-              <!-- Amigo 2 -->
               <a href="https://xat.me/zSovereign" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Ren" title="Ver perfil de Ren">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVx_MUjUFRzDP3VugKk8YCI2gJ4aWtLnkgiv7IrG6cdw&s" alt="Zenith" class="friend-img">
               </a>
-
-              <!-- Amigo 3 -->
               <a href="https://xat.me/Frieren" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Sinbad" title="Ver perfil de Sinbad">
                 <img src="https://xatimg.com/image/vSk9JKD8oWxb.jpg" alt="Val" class="friend-img">
               </a>
-              <!-- Amigo 4 -->
               <a href="https://xat.me/Feid" target="_blank" rel="noopener noreferrer" class="friend-avatar-link" data-friend-name="Doom" title="Ver perfil de Doom">
                 <img src="https://xatimg.com/image/rHbwUdubwmgr.jpg" alt="Val" class="friend-img">
               </a>
@@ -1064,23 +1019,17 @@
           </div>
         </div>
 
-      </div> <!-- Fin .sheet-scroll-body -->
+      </div>
 
     </div>
   </div>
 
-  <!-- Audio elemento DropBox -->
   <audio id="audioPlayer" preload="auto"></audio>
-
-  <!-- Toast flotante -->
   <div class="toast-popup" id="toastBox">Notificación</div>
 
   <script>
     lucide.createIcons();
 
-    // ==========================================
-    // ENLACE DIRECTO DE DROPBOX
-    // ==========================================
     const DROPBOX_AUDIO_URL = "https://www.dropbox.com/scl/fi/prxjt2m0n765mkv9ks873/Irme-Lejos.mp3?rlkey=a89pdle2i40hitp2rmpw5cj63&st=t6g8w1b2&dl=0";
 
     function formatDropboxDirectUrl(url) {
@@ -1091,7 +1040,6 @@
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = formatDropboxDirectUrl(DROPBOX_AUDIO_URL);
 
-    // Referencias del DOM
     const openTrigger = document.getElementById('openProfileTrigger');
     const closeTrigger = document.getElementById('closeProfileTrigger');
     const modalOverlay = document.getElementById('profileModalOverlay');
@@ -1099,7 +1047,6 @@
     const bellDot = document.getElementById('bellDot');
     const toast = document.getElementById('toastBox');
 
-    // Controles de Audio Spotify
     const playToggle = document.getElementById('musicPlayToggle');
     const playIcon = document.getElementById('musicPlayIcon');
     const progressFill = document.getElementById('trackProgressFill');
@@ -1117,7 +1064,6 @@
       }, 2500);
     }
 
-    // Reproducción
     function playAudioTrack() {
       const playPromise = audioPlayer.play();
       if (playPromise !== undefined) {
@@ -1129,20 +1075,17 @@
       }
     }
 
-    // Pausa
     function pauseAudioTrack() {
       if (!audioPlayer.paused) {
         audioPlayer.pause();
       }
     }
 
-    // Auto-reproducción al entrar a la pantalla 2
     openTrigger.addEventListener('click', () => {
       modalOverlay.classList.add('active');
       playAudioTrack();
     });
 
-    // Pausar si se cierra la pantalla 2
     function closeModal() {
       modalOverlay.classList.remove('active');
       pauseAudioTrack();
@@ -1162,17 +1105,14 @@
       }
     });
 
-    // Clic en la campana
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       showToast('Tienes un nuevo mensaje (249)');
-      // Ocultar el punto rojo una vez leído el mensaje
       if (bellDot) {
         bellDot.style.display = 'none';
       }
     });
 
-    // Formatear segundos a mm:ss
     function formatTime(sec) {
       if (isNaN(sec) || !isFinite(sec)) return "00:00";
       const m = String(Math.floor(sec / 60)).padStart(2, '0');
@@ -1180,7 +1120,6 @@
       return `${m}:${s}`;
     }
 
-    // Play / Pausa manual en el botón de Spotify
     playToggle.addEventListener('click', () => {
       if (audioPlayer.paused) {
         playAudioTrack();
@@ -1220,7 +1159,6 @@
       lucide.createIcons();
     });
 
-    // Clic en la barra para cambiar momento de la pista
     timeline.addEventListener('click', (e) => {
       if (!audioPlayer.duration) return;
       const rect = timeline.getBoundingClientRect();
@@ -1229,8 +1167,7 @@
       audioPlayer.currentTime = ratio * audioPlayer.duration;
     });
 
-    // Contador de tiempo jugando (Inicia en 3:46:23)
-    let gameSeconds = 3 * 3600 + 46 * 60 + 23; // 13583 segundos
+    let gameSeconds = 3 * 3600 + 46 * 60 + 23;
     const timerElem = document.getElementById('gameplayTimer');
 
     function formatGameTime(totalSec) {
@@ -1247,7 +1184,6 @@
       }
     }, 1000);
 
-    // Tabs
     document.querySelectorAll('.nav-tab-item').forEach(tab => {
       tab.addEventListener('click', function() {
         document.querySelectorAll('.nav-tab-item').forEach(t => t.classList.remove('active'));
