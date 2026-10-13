@@ -38,6 +38,7 @@
       --discord-blurple: #5865f2;
       --discord-dnd: #f23f43;
       --spotify-green: #1db954;
+      --gaming-green: #82b058;
       --text-main: #f3f4f6;
       --text-muted: #8b929e;
       --text-tertiary: #676d79;
@@ -217,11 +218,37 @@
       stroke-width: 2.5;
     }
 
-    .pill-marquee-window {
+    /* Fila inferior de la píldora: Indicador fijo + Marquesina */
+    .pill-status-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+      overflow: hidden;
       width: 100%;
+    }
+
+    .fixed-gaming-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--gaming-green);
+      font-size: clamp(0.82rem, 1.9vw, 0.9rem);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .fixed-gaming-dot {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    .pill-marquee-window {
+      flex: 1;
       overflow: hidden;
       white-space: nowrap;
-      margin-top: 3px;
       position: relative;
       mask-image: linear-gradient(90deg, black 80%, transparent 100%);
       -webkit-mask-image: linear-gradient(90deg, black 80%, transparent 100%);
@@ -652,6 +679,75 @@
       font-weight: 600;
     }
 
+    /* WIDGET JUGANDO */
+    .gaming-box {
+      background: var(--card-subtle);
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .gaming-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .gaming-top-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .gaming-dots {
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .gaming-media-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .gaming-game-cover {
+      width: 58px;
+      height: 58px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .gaming-game-meta {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .gaming-game-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .gaming-time-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.83rem;
+      color: var(--gaming-green);
+      font-weight: 600;
+    }
+
     .field-caption {
       font-size: 0.78rem;
       font-weight: 700;
@@ -662,10 +758,10 @@
     }
 
     .biography-quote {
-      font-family: Helvetica;
-      font-style: normal;
+      font-family: var(--font-serif);
+      font-style: italic;
       color: #d2d5de;
-      font-size: .9rem;
+      font-size: 1.05rem;
       line-height: 1.4;
       margin-bottom: 16px;
     }
@@ -789,10 +885,17 @@
           <span class="user-display-name">Scar</span>
           <i data-lucide="chevron-down"></i>
         </div>
-        <div class="pill-marquee-window">
-          <div class="marquee-track">
-            <span class="pill-marquee-text user-status-text">Llevo mil cicatrices que no me corresponden</span>
-            <span class="pill-marquee-text user-status-text"></span>
+        <div class="pill-status-row">
+          <div class="fixed-gaming-tag">
+            <i data-lucide="gamepad-2" style="width: 15px; height: 15px;"></i>
+            <span>+1</span>
+            <span class="fixed-gaming-dot">•</span>
+          </div>
+          <div class="pill-marquee-window">
+            <div class="marquee-track">
+              <span class="pill-marquee-text user-status-text">Llevo mil cicatrices que no me corresponden</span>
+              <span class="pill-marquee-text user-status-text"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -856,9 +959,10 @@
           <div class="sheet-handle-row">
             <span class="sheet-handle">rendezvoused • Nyxess</span>
             <div class="sheet-badges">
-             
+              
               <span class="badge-item" title="Server Booster"><span class="icon-triangle">⌲</span></span>
               <span class="badge-item" title="Cigarrillo">🚬</span>
+              <span class="badge-item" title="Curita">🩹</span>
                <span class="badge-item" title="Nitro Booster">💬</span>
             </div>
           </div>
@@ -903,9 +1007,29 @@
           </div>
         </div>
 
+        <!-- Widget Jugando -->
+        <div class="gaming-box">
+          <div class="gaming-header">
+            <span class="gaming-top-label">Jugando</span>
+            <i data-lucide="more-horizontal" class="gaming-dots" style="width: 18px; height: 18px;"></i>
+          </div>
+
+          <div class="gaming-media-row">
+            <img src="https://xatimg.com/image/nw7XP9Y4sAuz.png" alt="The Last of Us Part I" class="gaming-game-cover">
+            
+            <div class="gaming-game-meta">
+              <div class="gaming-game-title">The Last of Us Part I</div>
+              <div class="gaming-time-row">
+                <i data-lucide="gamepad-2" style="width: 16px; height: 16px;"></i>
+                <span id="gameplayTimer">3:46:23</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Biografía -->
         <div class="field-caption">Biografía</div>
-        <div class="biography-quote" id="Helvetica">
+        <div class="biography-quote" id="bioContent">
           We are all going to hell, but not today
         </div>
 
@@ -1041,7 +1165,7 @@
     // Clic en la campana
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      showToast('Tienes un nuevo mensaje (56)');
+      showToast('Tienes un nuevo mensaje (249)');
       // Ocultar el punto rojo una vez leído el mensaje
       if (bellDot) {
         bellDot.style.display = 'none';
@@ -1104,6 +1228,24 @@
       const ratio = Math.max(0, Math.min(1, clickX / rect.width));
       audioPlayer.currentTime = ratio * audioPlayer.duration;
     });
+
+    // Contador de tiempo jugando (Inicia en 3:46:23)
+    let gameSeconds = 3 * 3600 + 46 * 60 + 23; // 13583 segundos
+    const timerElem = document.getElementById('gameplayTimer');
+
+    function formatGameTime(totalSec) {
+      const hrs = Math.floor(totalSec / 3600);
+      const mins = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+      const secs = String(totalSec % 60).padStart(2, '0');
+      return `${hrs}:${mins}:${secs}`;
+    }
+
+    setInterval(() => {
+      gameSeconds++;
+      if (timerElem) {
+        timerElem.textContent = formatGameTime(gameSeconds);
+      }
+    }, 1000);
 
     // Tabs
     document.querySelectorAll('.nav-tab-item').forEach(tab => {
