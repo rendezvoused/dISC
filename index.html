@@ -143,8 +143,8 @@
       mix-blend-mode: screen;
       opacity: 0.34;
       pointer-events: none;
-      mask-image: linear-gradient(to right, transparent 0%, black 50%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
+      mask-image: linear-gradient(90deg, transparent 0%, black 50%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 50%);
     }
 
     .pill-avatar-box {
@@ -264,11 +264,25 @@
       backdrop-filter: blur(10px);
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
+      position: relative;
     }
 
     .pill-bell-button:hover {
       background: rgba(255, 255, 255, 0.14);
       transform: scale(1.06);
+    }
+
+    /* Punto de notificación sobre la campana */
+    .bell-notification-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 9px;
+      height: 9px;
+      background-color: var(--discord-dnd);
+      border-radius: 50%;
+      border: 2px solid #14161c;
+      box-shadow: 0 0 6px rgba(242, 63, 67, 0.8);
     }
 
     /* PANTALLA 2 Y 3: MODAL PERFIL EXPANDIDO */
@@ -484,6 +498,13 @@
 
     .badge-item {
       font-size: 0.85rem;
+    }
+
+    /* Triángulo inclinado 45° con la punta hacia arriba */
+    .icon-triangle {
+      display: inline-block;
+      transform: rotate(-45deg);
+      line-height: 1;
     }
 
     .sheet-nav-tabs {
@@ -778,6 +799,7 @@
 
       <button class="pill-bell-button" id="bellButton" title="Notificaciones">
         <i data-lucide="bell" style="width: 20px; height: 20px;"></i>
+        <span class="bell-notification-dot" id="bellDot"></span>
       </button>
     </div>
   </div>
@@ -834,9 +856,10 @@
           <div class="sheet-handle-row">
             <span class="sheet-handle">rendezvoused • Nyxess</span>
             <div class="sheet-badges">
-              <span class="badge-item" title="Nitro Booster">💬</span>
-              <span class="badge-item" title="Server Booster">ৎ୭</span>
-              <span class="badge-item" title="HypeSquad Bravery">🚫</span>
+             
+              <span class="badge-item" title="Server Booster"><span class="icon-triangle">⌲</span></span>
+              <span class="badge-item" title="Cigarrillo">🚬</span>
+               <span class="badge-item" title="Nitro Booster">💬</span>
             </div>
           </div>
         </div>
@@ -949,6 +972,7 @@
     const closeTrigger = document.getElementById('closeProfileTrigger');
     const modalOverlay = document.getElementById('profileModalOverlay');
     const bellBtn = document.getElementById('bellButton');
+    const bellDot = document.getElementById('bellDot');
     const toast = document.getElementById('toastBox');
 
     // Controles de Audio Spotify
@@ -1014,9 +1038,14 @@
       }
     });
 
+    // Clic en la campana
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      showToast('No tienes notificaciones pendientes');
+      showToast('Tienes un nuevo mensaje (24)');
+      // Ocultar el punto rojo una vez leído el mensaje
+      if (bellDot) {
+        bellDot.style.display = 'none';
+      }
     });
 
     // Formatear segundos a mm:ss
